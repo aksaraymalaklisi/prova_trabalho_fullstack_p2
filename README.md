@@ -1,4 +1,4 @@
-# Fullstack Application Project
+# Aplicação Fullstack
 
 Esta é uma aplicação Fullstack conteinerizada contendo um Backend em **Node.js/Express** e um Frontend em **React/Tailwind CSS**.
 A documentação do backend está no README.md na diretório backend.
