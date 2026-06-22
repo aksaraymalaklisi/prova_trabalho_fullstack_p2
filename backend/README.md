@@ -1,0 +1,9 @@
+# Arquitetura e Decisões Técnicas do Backend
+
+O backend desta aplicação foi arquitetado utilizando **Node.js** com o framework **Express**. Dois bancos de dados foram utilizados para tarefas distintas: **PostgreSQL** atua como o banco de dados relacional, gerenciado pelo ORM **Sequelize**, e é exclusivamente utilizado pela entidade de Usuários. Por outro lado, foi utilizado o **MongoDB** (NoSQL), orquestrado pelo ODM **Mongoose**, para armazenar os objetos Carros, Motos e Marcas de Roupa.
+
+Como um dos objetivos era se conformar ao **OWASP Top 10**, foram implementadas certas medidas de segurança. A autenticação é providenciada de forma *stateless* através de **JSON Web Tokens (JWT)**, e as senhas são criptografadas através da biblioteca **bcrypt**. O controle de acesso é baseado em perfis (Role-Based Access Control - RBAC), implementado via middlewares dedicados que validam a presença do token e restringem rotas sensíveis (como a gestão de usuários) apenas a perfis com privilégio de `admin`. Além disso, a camada de rede é protegida por ferramentas nativas do ecossistema: o **Helmet.js** sanitiza e configura cabeçalhos HTTP de segurança para prevenir ataques como *Cross-Site Scripting (XSS)*, e o **Express Rate Limit** serve para mitigar ataques de força bruta e negação de serviço (DDoS).
+
+A documentação da API foi implementada com **Swagger** (via `swagger-jsdoc` e `swagger-ui-express`),e o sistema possui **testes de integração** construídos com **Jest** e **Supertest**. Ainda no tópico de documentação, o repositório contém o arquivo .env.example e o .gitignore configurado para não haver vazamento de dados sensíveis durante o desenvolvimento.
+
+Além disso, para propósitos de testes, o ambiente utiliza **SQLite em memória** e o **MongoDB Memory Server**. Por fim, todo o ecossistema é estaticamente analisado pelo **ESLint** moderno (Flat Config).
